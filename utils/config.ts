@@ -8,7 +8,7 @@ const schema = Type.Object({
   HOST: Type.String({
     default: '0.0.0.0',
   }),
-  //   DATABASE_URL: Type.String(),
+  DATABASE_URL: Type.String(),
   //   API_KEY: Type.String(),
 })
 
