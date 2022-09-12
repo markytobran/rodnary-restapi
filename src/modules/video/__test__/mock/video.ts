@@ -1,0 +1,27 @@
+export const video = {
+  _id: '6224aa48ff039311145329b7',
+  title: 'Feeder Fishing on the RIVER',
+  channelTitle: 'Rob Wootton Fishing',
+  channelId: 'UUGG87PIM03_pycINtqEvmdg',
+  description:
+    "Feeder Fishing on the RIVER\\n\\nOne of my favourite venues... The river Trent is rammed full of fish and the beauty is not knowing what the species will be as Roach, dace, perch, bream and barbel are always viable targets.\\n\\nBy fishing a feeder it's a great way of targeting better fish but also can be very quick when trying to amass a big number of small fish.",
+  logoURL: 'https://yt3.ggpht.com/ytc/AKedOLR2bshKb_AgjeqnS4cDfGxbGfaXLmaEIAhb4S7Q_g=s176-c-k-c0x00ffffff-no-rj',
+  videoID: 'tB119yvpd2I',
+  venue: 'natural',
+  water: 'river',
+  fishing: 'feeder',
+  subFishing: 'feeder',
+  publishedAt: '2022-08-05T10:53:03Z',
+  videoLanguage: 'ENG',
+  subtitles: ['ENG'],
+  likes: 0,
+  thumbnails: [
+    { name: 'default', url: 'https://i.ytimg.com/vi/tB119yvpd2I/default.jpg' },
+    { name: 'medium', url: 'https://i.ytimg.com/vi/tB119yvpd2I/mqdefault.jpg' },
+    { name: 'high', url: 'https://i.ytimg.com/vi/tB119yvpd2I/hqdefault.jpg' },
+    { name: 'standard', url: 'https://i.ytimg.com/vi/tB119yvpd2I/sddefault.jpg' },
+    { name: 'maxres', url: 'https://i.ytimg.com/vi/tB119yvpd2I/maxresdefault.jpg' },
+  ],
+  socialLinks: [{ name: 'youtube', url: 'https://www.youtube.com/c/RobWootton' }],
+  coverImgLink: 'https://i.ytimg.com/vi/tB119yvpd2I/maxresdefault.jpg',
+}
