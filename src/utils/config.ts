@@ -9,7 +9,7 @@ const schema = Type.Object({
     default: '0.0.0.0',
   }),
   DATABASE_URL: Type.String(),
-  //   API_KEY: Type.String(),
+  API_KEY: Type.String(),
 })
 
 type Env = Static<typeof schema>

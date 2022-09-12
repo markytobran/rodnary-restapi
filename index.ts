@@ -1,14 +1,24 @@
-import fastify from 'fastify'
-import { config } from './utils/config'
-import { logger } from './utils/logger'
-import { createServer } from './utils/createServer'
-import { connectToDb, disconnectFromDb } from './utils/db'
+import { config } from './src/utils/config'
+import { createServer } from './src/utils/createServer'
+import { connectToDb, disconnectFromDb } from './src/utils/db'
+import { logger } from './src/utils/logger'
 
-const server = fastify()
+const signals = ['SIGINT', 'SIGTERM', 'SIGHUP'] as const
 
-server.get('/', async (request, reply) => {
-  reply.code(200).send({ message: 'Hello world!' })
-})
+async function gracefulShutdown({
+  signal,
+  server,
+}: {
+  signal: typeof signals[number]
+  server: Awaited<ReturnType<typeof createServer>>
+}) {
+  logger.info(`Got signal ${signal}. Good bye`)
+  await server.close()
+
+  await disconnectFromDb()
+
+  process.exit(0)
+}
 
 async function startServer() {
   const server = await createServer()
@@ -22,14 +32,14 @@ async function startServer() {
 
   logger.info(`App is listening`)
 
-  // for (let i = 0; i < signals.length; i++) {
-  //   process.on(signals[i], () =>
-  //     gracefulShutdown({
-  //       signal: signals[i],
-  //       server,
-  //     })
-  //   )
-  // }
+  for (let i = 0; i < signals.length; i++) {
+    process.on(signals[i], () =>
+      gracefulShutdown({
+        signal: signals[i],
+        server,
+      })
+    )
+  }
 }
 
 startServer()
