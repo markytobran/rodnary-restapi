@@ -53,7 +53,7 @@ export async function getAllVideosHomeHandler(req: FastifyRequest, reply: Fastif
   try {
     const { skip, limit } = req.query as SkipLimitQuery
 
-    const [naturalVideos, commercialVideos, riverVideos, feederVideos, floatVideos] = await Promise.all([
+    const [natural, commercial, river, feeder, float] = await Promise.all([
       getVideos({ venue: 'natural' }, Number(skip), Number(limit)),
       getVideos({ venue: 'commercial' }, Number(skip), Number(limit)),
       getVideos({ water: 'river' }, Number(skip), Number(limit)),
@@ -61,7 +61,7 @@ export async function getAllVideosHomeHandler(req: FastifyRequest, reply: Fastif
       getVideos({ fishing: 'float' }, Number(skip), Number(limit)),
     ])
 
-    return reply.code(200).send({ naturalVideos, commercialVideos, riverVideos, feederVideos, floatVideos })
+    return reply.code(200).send({ natural, commercial, river, feeder, float })
   } catch (e) {
     logger.error(e, 'getAllVideosHomeHandler: error getting All top videos')
     return reply.code(500).send({ message: 'Error getting All top for homepage' })
