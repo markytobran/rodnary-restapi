@@ -15,10 +15,10 @@ export function videosRoute(app: FastifyInstance, options: FastifyPluginOptions,
   app.get('/', getVideosHandler)
   app.post('/', { preHandler: validateAPIkey, schema: createVideoSchema }, createVideoHandler)
   app.get('/:id', { schema: getVideoParamsSchema }, getVideoHandler)
-  app.get('/topvideos/home', getTOPVideosHandler)
+  app.get('/topvideos', getTOPVideosHandler)
   app.get('/channels/:id', { schema: getChannelIDParamsSchema }, getVideosByChannelIdHandler)
   app.get('/categories/:categoryKey/:value', { schema: getChannelKeyParamsSchema }, getVideosByCategoryHandler)
-  app.get('/allvideos/home', getAllVideosHomeHandler)
+  app.get('/allvideos', getAllVideosHomeHandler)
 
   done()
 }
