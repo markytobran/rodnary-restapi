@@ -7,6 +7,7 @@ import {
   getVideoHandler,
   getVideosByChannelIdHandler,
   getVideosByCategoryHandler,
+  getAllVideosHomeHandler,
 } from './video.controller'
 import { createVideoSchema, getVideoParamsSchema, getChannelIDParamsSchema, getChannelKeyParamsSchema } from './video.schema'
 
@@ -17,6 +18,7 @@ export function videosRoute(app: FastifyInstance, options: FastifyPluginOptions,
   app.get('/topvideos/home', getTOPVideosHandler)
   app.get('/channels/:id', { schema: getChannelIDParamsSchema }, getVideosByChannelIdHandler)
   app.get('/categories/:categoryKey/:value', { schema: getChannelKeyParamsSchema }, getVideosByCategoryHandler)
+  app.get('/allvideos/home', getAllVideosHomeHandler)
 
   done()
 }
