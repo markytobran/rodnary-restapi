@@ -109,7 +109,7 @@ export async function getVideosByCategoryHandler(req: FastifyRequest<{ Params: G
 
 export async function getVideosBySearchQuery(req: FastifyRequest<{ Params: GetChannelKeyParams }>, reply: FastifyReply) {
   try {
-    const { q } = req.query
+    const { q } = req.query as any
 
     if (q) {
       const videos = await getVideosByTitleOrDescription(q)
