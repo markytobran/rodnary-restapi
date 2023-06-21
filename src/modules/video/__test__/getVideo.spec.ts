@@ -10,11 +10,11 @@ describe("GET '/api/video/:id' route", async () => {
   const getVideoByIDSpy = vi.spyOn(VideoService, 'getVideoByID')
 
   it('calling the getVideoByID service with valid _id returns the right video', async () => {
-    const id = '6224aa48ff039311145329b7'
+    const id = '63239246b590a3934353949c'
     getVideoByIDSpy.mockResolvedValue(video)
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/' + id,
+      url: '/api/videos/' + id,
     })
 
     expect(response.json()).toEqual(video)
@@ -26,7 +26,7 @@ describe("GET '/api/video/:id' route", async () => {
     getVideoByIDSpy.mockResolvedValue(video)
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/invalid-id',
+      url: '/api/videos/invalid-id',
     })
 
     expect(response.json()).toEqual({ message: 'Error video id is not valid' })
@@ -37,7 +37,7 @@ describe("GET '/api/video/:id' route", async () => {
     getVideoByIDSpy.mockResolvedValue(undefined)
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/6224aa48ff039311145329b7',
+      url: '/api/videos/6224aa48ff039311145329b7',
     })
 
     expect(response.json()).toEqual({ message: 'Error video not found' })
@@ -48,7 +48,7 @@ describe("GET '/api/video/:id' route", async () => {
     getVideoByIDSpy.mockRejectedValue('Oh no error')
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/6224aa48ff039311145329b7',
+      url: '/api/videos/6224aa48ff039311145329b7',
     })
 
     expect(response.json()).toEqual({ message: 'Error getting videos' })

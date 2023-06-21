@@ -14,7 +14,7 @@ describe("POST '/api/video' route", async () => {
   it('calling the createVideo service with the VALID API key and VALID body should return the video', async () => {
     const response = await server.inject({
       method: 'POST',
-      url: '/api/video',
+      url: '/api/videos',
       payload: video,
       headers: { authorization: config.API_KEY },
     })
@@ -27,7 +27,7 @@ describe("POST '/api/video' route", async () => {
   it('calling the createVideo service with the VALID API key and INVALID body should return', async () => {
     const response = await server.inject({
       method: 'POST',
-      url: '/api/video',
+      url: '/api/videos',
       payload: {},
       headers: { authorization: config.API_KEY },
     })
@@ -38,7 +38,7 @@ describe("POST '/api/video' route", async () => {
   it('calling the createVideo service with the INVALID API key should return error message', async () => {
     const response = await server.inject({
       method: 'POST',
-      url: '/api/video',
+      url: '/api/videos',
       payload: video,
       headers: { authorization: 'Invalid API key' },
     })
@@ -50,7 +50,7 @@ describe("POST '/api/video' route", async () => {
     createVideoSpy.mockRejectedValue('Server is down')
     const response = await server.inject({
       method: 'POST',
-      url: '/api/video',
+      url: '/api/videos',
       payload: video,
       headers: { authorization: config.API_KEY },
     })

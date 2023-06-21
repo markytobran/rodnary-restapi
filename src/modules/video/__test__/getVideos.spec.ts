@@ -14,7 +14,7 @@ describe("GET '/api/video' route", async () => {
     getVideosSpy.mockResolvedValue(videos)
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video',
+      url: '/api/videos',
     })
 
     expect(response.json()).toEqual(videos)
@@ -25,7 +25,7 @@ describe("GET '/api/video' route", async () => {
     getVideosSpy.mockRejectedValue('Oh no error')
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video',
+      url: '/api/videos',
     })
 
     expect(response.json()).toEqual({ message: 'Error getting videos' })

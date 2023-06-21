@@ -15,7 +15,7 @@ describe("GET '/api/video/topvideos/home' route", async () => {
 
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/topvideos/home',
+      url: '/api/videos/topvideos',
     })
 
     expect(response.json()).toEqual({ commercialVideos: [video, video], naturalVideos: [video, video] })
@@ -26,7 +26,7 @@ describe("GET '/api/video/topvideos/home' route", async () => {
     getVideosSpy.mockRejectedValue('Oh no error')
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/topvideos/home',
+      url: '/api/videos/topvideos',
     })
 
     expect(response.json()).toEqual({ message: 'Error getting TOP Videos for homepage' })

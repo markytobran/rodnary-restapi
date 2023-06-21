@@ -9,23 +9,23 @@ describe("GET '/api/video/category/:categoryKey/:value' route", async () => {
 
   const getVideosSpy = vi.spyOn(VideoService, 'getVideos')
 
-  it('calling the getVideo service returns the right videos for the category', async () => {
+  it('calling the getVideos service returns the right videos for the category', async () => {
     getVideosSpy.mockResolvedValueOnce([video, video])
 
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/category/water/river',
+      url: '/api/videos/categories/fishing/feeder',
     })
 
     expect(response.json()).toEqual([video, video])
     expect(response.statusCode).toEqual(200)
   })
 
-  it('calling the getVideo service, but error occurs', async () => {
+  it('calling the getVideos service, but error occurs', async () => {
     getVideosSpy.mockRejectedValue('Oh no error')
     const response = await server.inject({
       method: 'GET',
-      url: '/api/video/category/water/river',
+      url: '/api/videos/categories/fishing/feeder',
     })
 
     expect(response.json()).toEqual({ message: 'Error getting videos by category' })
