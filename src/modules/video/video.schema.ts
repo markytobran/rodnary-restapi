@@ -16,17 +16,17 @@ const video = Type.Object({
   videoLanguage: Type.String(),
   subtitles: Type.Array(Type.String()),
   likes: Type.Number(),
-  thumbnails: Type.Array(
-    Type.Object({ name: Type.String(), url: Type.String() })
-  ),
-  socialLinks: Type.Array(
-    Type.Object({ name: Type.String(), url: Type.String() })
-  ),
+  thumbnails: Type.Array(Type.Object({ name: Type.String(), url: Type.String() })),
+  socialLinks: Type.Array(Type.Object({ name: Type.String(), url: Type.String() })),
   coverImgLink: Type.String(),
 })
 
 const params = Type.Object({
   id: Type.String(),
+})
+
+const searchQuery = Type.Object({
+  q: Type.String(),
 })
 
 const channelParams = Type.Object({
@@ -66,9 +66,16 @@ export const getChannelKeyParamsSchema = {
   },
 }
 
+export const getVideosBySearchQueries = {
+  description: 'Get fishing videos by search query',
+  query: searchQuery,
+  response: {
+    200: Type.Array(video),
+  },
+}
+
 export type CreateVideoBody = Static<typeof createVideoSchema.body>
 export type GetVideoParams = Static<typeof getVideoParamsSchema.params>
 export type GetChannelIDParams = Static<typeof getChannelIDParamsSchema.params>
-export type GetChannelKeyParams = Static<
-  typeof getChannelKeyParamsSchema.params
->
+export type GetChannelKeyParams = Static<typeof getChannelKeyParamsSchema.params>
+export type GetVideoBySearchQuery = Static<typeof getVideosBySearchQueries.query>

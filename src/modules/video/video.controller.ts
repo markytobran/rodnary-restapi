@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { logger } from '../../utils/logger'
 import { CreateVideoBody, GetVideoParams, GetChannelIDParams, GetChannelKeyParams } from './video.schema'
 import { createVideo, getVideos, getVideoByID, getVideosByTitleOrDescription } from './video.service'
-import { SkipLimitQuery } from '../../types/interfaces'
+import { SkipLimitQuery, SearchQuery } from '../../types/interfaces'
 
 export async function getVideosHandler(req: FastifyRequest, reply: FastifyReply) {
   try {
@@ -109,14 +109,9 @@ export async function getVideosByCategoryHandler(req: FastifyRequest<{ Params: G
 
 export async function getVideosBySearchQuery(req: FastifyRequest<{ Params: GetChannelKeyParams }>, reply: FastifyReply) {
   try {
-    const { q } = req.query as any
+    const { q } = req.query as SearchQuery
 
-    if (q) {
-      const videos = await getVideosByTitleOrDescription(q)
-      return reply.code(200).send(videos)
-    }
-
-    const videos = await getVideos({}, 12, 0)
+    const videos = await getVideosByTitleOrDescription(q)
     return reply.code(200).send(videos)
   } catch (e) {
     logger.error(e, 'getVideosBySearchQuery: error getting videos by search query')
