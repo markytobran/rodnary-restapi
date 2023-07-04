@@ -21,12 +21,19 @@ const video = Type.Object({
   coverImgLink: Type.String(),
 })
 
+const skipLimitQuery = Type.Object({
+  limit: Type.Number(),
+  skip: Type.Number(),
+})
+
 const params = Type.Object({
   id: Type.String(),
 })
 
 const searchQuery = Type.Object({
   q: Type.String(),
+  limit: Type.Number(),
+  skip: Type.Number(),
 })
 
 const channelParams = Type.Object({
@@ -79,3 +86,4 @@ export type GetVideoParams = Static<typeof getVideoParamsSchema.params>
 export type GetChannelIDParams = Static<typeof getChannelIDParamsSchema.params>
 export type GetChannelKeyParams = Static<typeof getChannelKeyParamsSchema.params>
 export type GetVideoBySearchQuery = Static<typeof getVideosBySearchQueries.query>
+export type GetSkipLimitQuery = Static<typeof skipLimitQuery>

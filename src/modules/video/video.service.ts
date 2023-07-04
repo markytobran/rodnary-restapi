@@ -10,10 +10,13 @@ export async function getVideoByID(id: string) {
   return VideoModel.findById(id)
 }
 
-export async function getVideosByTitleOrDescription(query: String) {
-  return VideoModel.find({ $or: [{ title: { $regex: query, $options: 'i' } }, { description: { $regex: query, $options: 'i' } }] }).sort({
-    _id: -1,
-  })
+export async function getVideosByTitleOrDescription(query: string, skip: number, limit: number) {
+  return VideoModel.find({ $or: [{ title: { $regex: query, $options: 'i' } }, { description: { $regex: query, $options: 'i' } }] })
+    .sort({
+      _id: -1,
+    })
+    .skip(skip)
+    .limit(limit)
 }
 
 export async function createVideo(input: CreateVideoBody): Promise<Video> {

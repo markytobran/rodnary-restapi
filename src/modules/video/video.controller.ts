@@ -1,13 +1,12 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import mongoose from 'mongoose'
 import { logger } from '../../utils/logger'
-import { CreateVideoBody, GetVideoParams, GetChannelIDParams, GetChannelKeyParams } from './video.schema'
+import { CreateVideoBody, GetVideoParams, GetChannelIDParams, GetChannelKeyParams, GetVideoBySearchQuery, GetSkipLimitQuery } from './video.schema'
 import { createVideo, getVideos, getVideoByID, getVideosByTitleOrDescription } from './video.service'
-import { SkipLimitQuery, SearchQuery } from '../../types/interfaces'
 
-export async function getVideosHandler(req: FastifyRequest, reply: FastifyReply) {
+export async function getVideosHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
-    const { skip, limit } = req.query as SkipLimitQuery
+    const { skip, limit } = req.query
     const videos = await getVideos({}, Number(skip), Number(limit))
     return reply.code(200).send(videos)
   } catch (e) {
@@ -48,9 +47,9 @@ export async function createVideoHandler(req: FastifyRequest<{ Body: CreateVideo
   }
 }
 
-export async function getAllVideosHomeHandler(req: FastifyRequest, reply: FastifyReply) {
+export async function getAllVideosHomeHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
-    const { skip, limit } = req.query as SkipLimitQuery
+    const { skip, limit } = req.query
 
     const [all, natural, commercial, river, feeder, float] = await Promise.all([
       getVideos({}, Number(skip), Number(limit)),
@@ -68,9 +67,9 @@ export async function getAllVideosHomeHandler(req: FastifyRequest, reply: Fastif
   }
 }
 
-export async function getTOPVideosHandler(req: FastifyRequest, reply: FastifyReply) {
+export async function getTOPVideosHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
-    const { skip, limit } = req.query as SkipLimitQuery
+    const { skip, limit } = req.query
     const naturalVideos = await getVideos({ venue: 'natural' }, Number(skip), Number(limit))
     const commercialVideos = await getVideos({ venue: 'commercial' }, Number(skip), Number(limit))
 
@@ -81,11 +80,14 @@ export async function getTOPVideosHandler(req: FastifyRequest, reply: FastifyRep
   }
 }
 
-export async function getVideosByChannelIdHandler(req: FastifyRequest<{ Params: GetChannelIDParams }>, reply: FastifyReply) {
+export async function getVideosByChannelIdHandler(
+  req: FastifyRequest<{ Params: GetChannelIDParams; Querystring: GetSkipLimitQuery }>,
+  reply: FastifyReply
+) {
   try {
     const channelId = req.params.id
-    const { skip, limit } = req.query as SkipLimitQuery
-    const videos = await getVideos({ channelId }, Number(skip), Number(limit))
+    const { skip, limit } = req.query
+    const videos = await getVideos({ channelId }, skip, limit)
     return reply.code(200).send(videos)
   } catch (e) {
     logger.error(e, 'getVideosByChannelIdHandler: error getting videos by channel ID')
@@ -93,10 +95,13 @@ export async function getVideosByChannelIdHandler(req: FastifyRequest<{ Params: 
   }
 }
 
-export async function getVideosByCategoryHandler(req: FastifyRequest<{ Params: GetChannelKeyParams }>, reply: FastifyReply) {
+export async function getVideosByCategoryHandler(
+  req: FastifyRequest<{ Params: GetChannelKeyParams; Querystring: GetSkipLimitQuery }>,
+  reply: FastifyReply
+) {
   try {
     const { categoryKey, value } = req.params
-    const { skip, limit } = req.query as SkipLimitQuery
+    const { skip, limit } = req.query
 
     const videos = await getVideos({ [categoryKey]: value }, Number(skip), Number(limit))
 
@@ -107,11 +112,11 @@ export async function getVideosByCategoryHandler(req: FastifyRequest<{ Params: G
   }
 }
 
-export async function getVideosBySearchQuery(req: FastifyRequest<{ Params: GetChannelKeyParams }>, reply: FastifyReply) {
+export async function getVideosBySearchQuery(req: FastifyRequest<{ Querystring: GetVideoBySearchQuery }>, reply: FastifyReply) {
   try {
-    const { q } = req.query as SearchQuery
+    const { q, skip, limit } = req.query
 
-    const videos = await getVideosByTitleOrDescription(q)
+    const videos = await getVideosByTitleOrDescription(q, skip, limit)
     return reply.code(200).send(videos)
   } catch (e) {
     logger.error(e, 'getVideosBySearchQuery: error getting videos by search query')
