@@ -1,6 +1,6 @@
 import { Static, Type } from '@sinclair/typebox'
 
-const video = Type.Object({
+const Video = Type.Object({
   _id: Type.String(),
   title: Type.String(),
   channelTitle: Type.String(),
@@ -43,9 +43,9 @@ const channelParams = Type.Object({
 
 export const createVideoSchema = {
   description: 'Create a new fishing video',
-  body: Type.Omit(video, ['_id']),
+  body: Type.Omit(Video, ['_id']),
   response: {
-    201: video,
+    201: Video,
   },
 }
 
@@ -53,7 +53,7 @@ export const getVideoParamsSchema = {
   description: 'Get a fishing video by id',
   params,
   response: {
-    200: video,
+    200: Video,
   },
 }
 
@@ -61,7 +61,7 @@ export const getChannelIDParamsSchema = {
   description: 'Get fishing videos by channel id',
   params,
   response: {
-    200: Type.Array(video),
+    200: Type.Array(Video),
   },
 }
 
@@ -69,7 +69,7 @@ export const getChannelKeyParamsSchema = {
   description: 'Get fishing videos by channel name and value',
   params: channelParams,
   response: {
-    200: Type.Array(video),
+    200: Type.Array(Video),
   },
 }
 
@@ -77,7 +77,7 @@ export const getVideosBySearchQueries = {
   description: 'Get fishing videos by search query',
   query: searchQuery,
   response: {
-    200: Type.Array(video),
+    200: Type.Array(Video),
   },
 }
 
