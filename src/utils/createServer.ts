@@ -7,7 +7,7 @@ import { config } from './config'
 export async function createServer() {
   const app = fastify()
   app.register(cors, {
-    origin: config.CLIENT_URL || 'http://localhost:3000',
+    origin: [config.CLIENT_URL, 'http://localhost:3000'],
   })
   app.register(videosRoute, { prefix: '/api/videos' })
   app.register(catchRoute, { prefix: '/api/catches' })
