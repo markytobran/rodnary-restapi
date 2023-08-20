@@ -5,9 +5,7 @@ import { catchRoute } from '../modules/catch/catch.route'
 
 export async function createServer() {
   const app = fastify()
-  app.register(cors, {
-    origin: 'https://rodnary-nuxt.vercel.app/',
-  })
+  app.register(cors) //{origin: 'https://rodnary-nuxt.vercel.app/'}
   app.register(videosRoute, { prefix: '/api/videos' })
   app.register(catchRoute, { prefix: '/api/catches' })
   return app
