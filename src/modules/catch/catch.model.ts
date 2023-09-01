@@ -34,10 +34,13 @@ export class Catch {
   dayPeriod: string
 
   @prop({ type: String, required: true })
-  catchPlace: string
+  catchLocation: string
 
   @prop({ type: String, required: true })
   catchCircumstances: string
+
+  @prop({ type: String, required: true })
+  imgSrc: string
 
   @prop({ type: Boolean, required: true })
   acceptTermsAndConditions: boolean

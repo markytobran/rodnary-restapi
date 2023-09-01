@@ -1,34 +1,34 @@
 import { describe, it, vi, expect } from 'vitest'
 import { createServer } from '../../../utils/createServer'
-import * as VideoService from '../video.service'
-import { video } from './mock/video'
+import * as CatchService from '../catch.service'
+import { catchData } from './mock/catch'
 
-describe("GET '/api/video' route", async () => {
+describe("GET '/api/catch' route", async () => {
   const server = await createServer()
   await server.ready()
 
-  const getVideosSpy = vi.spyOn(VideoService, 'getVideos')
+  const getCatchesSpy = vi.spyOn(CatchService, 'getCatches')
 
   it('calling the getVideo service returns all videos', async () => {
-    const videos = [video, video, video]
-    getVideosSpy.mockResolvedValue(videos as any)
+    const catches = [catchData, catchData, catchData]
+    getCatchesSpy.mockResolvedValue(catches as any)
     const response = await server.inject({
       method: 'GET',
-      url: '/api/videos',
+      url: '/api/catches',
     })
 
-    expect(response.json()).toEqual(videos)
+    expect(response.json()).toEqual(catches)
     expect(response.statusCode).toEqual(200)
   })
 
   it('calling the getVideo service, but error occurs', async () => {
-    getVideosSpy.mockRejectedValue('Oh no error')
+    getCatchesSpy.mockRejectedValue('Oh no error')
     const response = await server.inject({
       method: 'GET',
-      url: '/api/videos',
+      url: '/api/catches',
     })
 
-    expect(response.json()).toEqual({ message: 'Error getting videos' })
+    expect(response.json()).toEqual({ message: 'Error getting catches' })
     expect(response.statusCode).toEqual(500)
   })
 })

@@ -11,7 +11,8 @@ const Catch = Type.Object({
   bait: Type.String(),
   weather: Type.String(),
   dayPeriod: Type.String(),
-  catchPlace: Type.String(),
+  catchLocation: Type.String(),
+  imgSrc: Type.String(),
   catchCircumstances: Type.String(),
   acceptTermsAndConditions: Type.Boolean(),
 })
