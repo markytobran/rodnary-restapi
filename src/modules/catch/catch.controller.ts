@@ -18,7 +18,7 @@ export async function createCatchHandler(req: FastifyRequest<{ Body: CreateCatch
   try {
     const catchData = req.body
 
-    const { secure_url } = await (cloudinary as any).uploader.upload(catchData.imgSrc, {
+    const { secure_url } = await cloudinary.uploader.upload(catchData.imgSrc, {
       upload_preset: 'catch',
     })
 
