@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { logger } from '../../utils/logger'
 import { CreateCatchBody } from './catch.schema'
 import { getCatches, createCatch } from './catch.service'
-import cloudinary from '../../utils/cloudinary.js'
+import cloudinary from '../../utils/cloudinary'
 
 export async function getCatchesHandler(req: FastifyRequest, reply: FastifyReply) {
   try {
