@@ -2,6 +2,7 @@ import fastify from 'fastify'
 import cors from '@fastify/cors'
 import { videosRoute } from '../modules/video/video.route'
 import { catchRoute } from '../modules/catch/catch.route'
+import { reviewRoute } from '../modules/review/review.route'
 import { config } from './config'
 import swagger from '@fastify/swagger'
 import swaggerUi from '@fastify/swagger-ui'
@@ -23,5 +24,6 @@ export async function createServer() {
   })
   app.register(videosRoute, { prefix: '/api/videos' })
   app.register(catchRoute, { prefix: '/api/catches' })
+  app.register(reviewRoute, { prefix: '/api/reviews' })
   return app
 }
