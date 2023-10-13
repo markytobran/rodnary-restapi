@@ -1,17 +1,17 @@
 import fastify from 'fastify'
-// import cors from '@fastify/cors'
+import cors from '@fastify/cors'
 import { videosRoute } from '../modules/video/video.route'
 import { catchRoute } from '../modules/catch/catch.route'
 import { reviewRoute } from '../modules/review/review.route'
-// import { config } from './config'
+import { config } from './config'
 import swagger from '@fastify/swagger'
 import swaggerUi from '@fastify/swagger-ui'
 
 export async function createServer() {
   const app = fastify()
-  // app.register(cors, {
-  //   origin: [config.CLIENT_URL, 'http://localhost:3000'],
-  // })
+  app.register(cors, {
+    origin: [config.CLIENT_URL, 'http://localhost:3000'],
+  })
   app.register(swagger)
 
   app.register(swaggerUi, {
