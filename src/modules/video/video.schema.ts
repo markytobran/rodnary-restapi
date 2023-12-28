@@ -57,6 +57,16 @@ export const getVideoParamsSchema = {
   },
 }
 
+export const deleteVideoParamsSchema = {
+  description: 'Delete a fishing video by id',
+  params,
+  response: {
+    200: Type.Object({
+      message: Type.String(),
+    }),
+  },
+}
+
 export const getChannelIDParamsSchema = {
   description: 'Get fishing videos by channel id',
   params,
@@ -83,6 +93,7 @@ export const getVideosBySearchQueries = {
 
 export type CreateVideoBody = Static<typeof createVideoSchema.body>
 export type GetVideoParams = Static<typeof getVideoParamsSchema.params>
+export type DeleteVideoParams = Static<typeof deleteVideoParamsSchema.params>
 export type GetChannelIDParams = Static<typeof getChannelIDParamsSchema.params>
 export type GetChannelKeyParams = Static<typeof getChannelKeyParamsSchema.params>
 export type GetVideoBySearchQuery = Static<typeof getVideosBySearchQueries.query>

@@ -9,6 +9,7 @@ import {
   getVideosByCategoryHandler,
   getAllVideosHomeHandler,
   getVideosBySearchQuery,
+  deleteVideoHandler,
 } from './video.controller'
 import {
   createVideoSchema,
@@ -16,12 +17,14 @@ import {
   getChannelIDParamsSchema,
   getChannelKeyParamsSchema,
   getVideosBySearchQueries,
+  deleteVideoParamsSchema,
 } from './video.schema'
 
 export function videosRoute(app: FastifyInstance, options: FastifyPluginOptions, done: () => void) {
   app.get('/', getVideosHandler)
   app.post('/', { preHandler: validateAPIkey, schema: createVideoSchema }, createVideoHandler)
   app.get('/:id', { schema: getVideoParamsSchema }, getVideoHandler)
+  app.delete('/:id', { schema: deleteVideoParamsSchema }, deleteVideoHandler)
   app.get('/topvideos', getTOPVideosHandler)
   app.get('/channels/:id', { schema: getChannelIDParamsSchema }, getVideosByChannelIdHandler)
   app.get('/categories/:categoryKey/:value', { schema: getChannelKeyParamsSchema }, getVideosByCategoryHandler)

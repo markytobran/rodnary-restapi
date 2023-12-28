@@ -1,7 +1,15 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import mongoose from 'mongoose'
 import { logger } from '../../utils/logger'
-import { CreateVideoBody, GetVideoParams, GetChannelIDParams, GetChannelKeyParams, GetVideoBySearchQuery, GetSkipLimitQuery } from './video.schema'
+import {
+  CreateVideoBody,
+  GetVideoParams,
+  DeleteVideoParams,
+  GetChannelIDParams,
+  GetChannelKeyParams,
+  GetVideoBySearchQuery,
+  GetSkipLimitQuery,
+} from './video.schema'
 import { createVideo, getVideos, getVideoByID, getVideosByTitleOrDescription } from './video.service'
 
 export async function getVideosHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
@@ -34,6 +42,30 @@ export async function getVideoHandler(req: FastifyRequest<{ Params: GetVideoPara
   } catch (e) {
     logger.error(e, 'getVideoHandler: error getting video')
     return reply.code(500).send({ message: 'Error getting videos' })
+  }
+}
+
+export async function deleteVideoHandler(req: FastifyRequest<{ Params: DeleteVideoParams }>, reply: FastifyReply) {
+  try {
+    const id = req.params.id
+    const isValid = mongoose.isValidObjectId(id)
+
+    if (!isValid) {
+      return reply.code(400).send({ message: 'Error video id is not valid' })
+    }
+
+    const video = await getVideoByID(id)
+
+    if (!video) {
+      return reply.code(404).send({ message: 'Error video not found' })
+    }
+
+    await video.remove()
+
+    return reply.code(200).send({ message: `The video was succesfully deleted ${id}` })
+  } catch (e) {
+    logger.error(e, 'deleteVideoHandler: error getting video')
+    return reply.code(500).send({ message: 'Error deleting video' })
   }
 }
 
