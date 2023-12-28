@@ -10,6 +10,10 @@ export async function getVideoByID(id: string) {
   return VideoModel.findById(id)
 }
 
+export async function deleteVideoByID(id: string) {
+  return VideoModel.findByIdAndDelete(id)
+}
+
 export async function getVideosByTitleOrDescription(query: string, skip: number, limit: number) {
   return VideoModel.find({ $or: [{ title: { $regex: query, $options: 'i' } }, { description: { $regex: query, $options: 'i' } }] })
     .sort({

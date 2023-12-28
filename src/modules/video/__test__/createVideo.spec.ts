@@ -9,7 +9,7 @@ describe("POST '/api/video' route", async () => {
   await server.ready()
 
   const createVideoSpy = vi.spyOn(VideoService, 'createVideo')
-  createVideoSpy.mockResolvedValue(video)
+  createVideoSpy.mockResolvedValue(video as any)
 
   it('calling the createVideo service with the VALID API key and VALID body should return the video', async () => {
     const response = await server.inject({

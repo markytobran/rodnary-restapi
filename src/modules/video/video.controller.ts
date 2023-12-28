@@ -10,7 +10,7 @@ import {
   GetVideoBySearchQuery,
   GetSkipLimitQuery,
 } from './video.schema'
-import { createVideo, getVideos, getVideoByID, getVideosByTitleOrDescription } from './video.service'
+import { createVideo, getVideos, getVideoByID, deleteVideoByID, getVideosByTitleOrDescription } from './video.service'
 
 export async function getVideosHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
@@ -60,7 +60,7 @@ export async function deleteVideoHandler(req: FastifyRequest<{ Params: DeleteVid
       return reply.code(404).send({ message: 'Error video not found' })
     }
 
-    await video.remove()
+    await deleteVideoByID(video._id)
 
     return reply.code(200).send({ message: `The video was succesfully deleted ${id}` })
   } catch (e) {

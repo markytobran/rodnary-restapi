@@ -10,8 +10,8 @@ describe("GET '/api/video/topvideos/home' route", async () => {
   const getVideosSpy = vi.spyOn(VideoService, 'getVideos')
 
   it('calling the getVideo service returns the right videos for the home page', async () => {
-    getVideosSpy.mockResolvedValueOnce([video, video])
-    getVideosSpy.mockResolvedValueOnce([video, video])
+    getVideosSpy.mockResolvedValueOnce([video, video] as any)
+    getVideosSpy.mockResolvedValueOnce([video, video] as any)
 
     const response = await server.inject({
       method: 'GET',

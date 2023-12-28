@@ -10,7 +10,7 @@ describe("GET '/api/video/category/:categoryKey/:value' route", async () => {
   const getVideosSpy = vi.spyOn(VideoService, 'getVideos')
 
   it('calling the getVideos service returns the right videos for the category', async () => {
-    getVideosSpy.mockResolvedValueOnce([video, video])
+    getVideosSpy.mockResolvedValueOnce([video, video] as any)
 
     const response = await server.inject({
       method: 'GET',
