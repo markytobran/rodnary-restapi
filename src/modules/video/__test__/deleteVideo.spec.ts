@@ -2,6 +2,7 @@ import { describe, it, vi, expect } from 'vitest'
 import { createServer } from '../../../utils/createServer'
 import * as VideoService from '../video.service'
 import { video } from './mock/video'
+import { config } from '../../../utils/config'
 
 describe("DELETE '/api/video/:id' route", async () => {
   const server = await createServer()
@@ -17,6 +18,7 @@ describe("DELETE '/api/video/:id' route", async () => {
     const response = await server.inject({
       method: 'DELETE',
       url: '/api/videos/' + id,
+      headers: { authorization: config.API_KEY },
     })
     expect(response.statusCode).toEqual(200)
   })
@@ -26,6 +28,7 @@ describe("DELETE '/api/video/:id' route", async () => {
     const response = await server.inject({
       method: 'DELETE',
       url: '/api/videos/invalid-id',
+      headers: { authorization: config.API_KEY },
     })
 
     expect(response.json()).toEqual({ message: 'Error video id is not valid' })
@@ -37,6 +40,7 @@ describe("DELETE '/api/video/:id' route", async () => {
     const response = await server.inject({
       method: 'DELETE',
       url: '/api/videos/6224aa48ff039311145329b7',
+      headers: { authorization: config.API_KEY },
     })
 
     expect(response.json()).toEqual({ message: 'Error video not found' })
@@ -48,6 +52,7 @@ describe("DELETE '/api/video/:id' route", async () => {
     const response = await server.inject({
       method: 'DELETE',
       url: '/api/videos/6224aa48ff039311145329b7',
+      headers: { authorization: config.API_KEY },
     })
 
     expect(response.json()).toEqual({ message: 'Error deleting video' })

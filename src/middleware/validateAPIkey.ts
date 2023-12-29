@@ -1,10 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { config } from '../utils/config'
-import { CreateVideoBody } from '../modules/video/video.schema'
 import { logger } from '../utils/logger'
 
-const validateAPIkey = (
-  req: FastifyRequest<{ Body: CreateVideoBody }>,
+const validateAPIkey = <TBody = null, TParams = null>(
+  req: FastifyRequest<{ Body: TBody; Params: TParams }>,
   reply: FastifyReply,
   done: () => void
 ) => {

@@ -20,11 +20,13 @@ import {
   deleteVideoParamsSchema,
 } from './video.schema'
 
+import { CreateVideoBody, DeleteVideoParams } from './video.schema'
+
 export function videosRoute(app: FastifyInstance, options: FastifyPluginOptions, done: () => void) {
   app.get('/', getVideosHandler)
-  app.post('/', { preHandler: validateAPIkey, schema: createVideoSchema }, createVideoHandler)
+  app.post('/', { preHandler: validateAPIkey<CreateVideoBody>, schema: createVideoSchema }, createVideoHandler)
   app.get('/:id', { schema: getVideoParamsSchema }, getVideoHandler)
-  app.delete('/:id', { schema: deleteVideoParamsSchema }, deleteVideoHandler)
+  app.delete('/:id', { preHandler: validateAPIkey<null, DeleteVideoParams>, schema: deleteVideoParamsSchema }, deleteVideoHandler)
   app.get('/topvideos', getTOPVideosHandler)
   app.get('/channels/:id', { schema: getChannelIDParamsSchema }, getVideosByChannelIdHandler)
   app.get('/categories/:categoryKey/:value', { schema: getChannelKeyParamsSchema }, getVideosByCategoryHandler)
