@@ -2,11 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { config } from '../utils/config'
 import { logger } from '../utils/logger'
 
-const validateAPIkey = <TBody = null, TParams = null>(
-  req: FastifyRequest<{ Body: TBody; Params: TParams }>,
-  reply: FastifyReply,
-  done: () => void
-) => {
+const validateAPIkey = <TBody = {}, TParams = {}>(req: FastifyRequest<{ Body: TBody; Params: TParams }>, reply: FastifyReply, done: () => void) => {
   try {
     const isTokenValid = config.API_KEY === req.headers.authorization
 
