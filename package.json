@@ -4,7 +4,6 @@
   "main": "index.js",
   "author": "Mark Bran",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "dev": "tsx watch index.ts",
     "build": "tsc --project tsconfig.build.json",
