@@ -21,6 +21,19 @@ const Video = Type.Object({
   coverImgLink: Type.String(),
 })
 
+const OmittedVideo = Type.Omit(Video, [
+  'channelTitle',
+  'channelId',
+  'logoURL',
+  'videoID',
+  'venue',
+  'water',
+  'fishing',
+  'likes',
+  'socialLinks',
+  'coverImgLink',
+])
+
 const skipLimitQuery = Type.Object({
   limit: Type.Number(),
   skip: Type.Number(),
@@ -71,7 +84,7 @@ export const getChannelIDParamsSchema = {
   description: 'Get fishing videos by channel id',
   params,
   response: {
-    200: Type.Array(Video),
+    200: Type.Array(OmittedVideo),
   },
 }
 
@@ -79,7 +92,7 @@ export const getChannelKeyParamsSchema = {
   description: 'Get fishing videos by channel name and value',
   params: channelParams,
   response: {
-    200: Type.Array(Video),
+    200: Type.Array(OmittedVideo),
   },
 }
 
@@ -87,7 +100,7 @@ export const getVideosBySearchQueries = {
   description: 'Get fishing videos by search query',
   query: searchQuery,
   response: {
-    200: Type.Array(Video),
+    200: Type.Array(OmittedVideo),
   },
 }
 

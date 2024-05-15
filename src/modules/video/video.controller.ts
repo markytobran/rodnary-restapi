@@ -9,7 +9,6 @@ import {
   GetChannelKeyParams,
   GetVideoBySearchQuery,
   GetSkipLimitQuery,
-  baseVideoFields,
 } from './video.schema'
 import { createVideo, getVideos, getVideoByID, deleteVideoByID, getVideosByTitleOrDescription } from './video.service'
 
@@ -85,12 +84,12 @@ export async function getAllVideosHomeHandler(req: FastifyRequest<{ Querystring:
     const { skip, limit } = req.query
 
     const [all, natural, commercial, river, feeder, float] = await Promise.all([
-      getVideos({}, Number(skip), Number(limit), baseVideoFields),
-      getVideos({ venue: 'natural' }, Number(skip), Number(limit), baseVideoFields),
-      getVideos({ venue: 'commercial' }, Number(skip), Number(limit), baseVideoFields),
-      getVideos({ water: 'river' }, Number(skip), Number(limit), baseVideoFields),
-      getVideos({ fishing: 'feeder' }, Number(skip), Number(limit), baseVideoFields),
-      getVideos({ fishing: 'float' }, Number(skip), Number(limit), baseVideoFields),
+      getVideos({}, Number(skip), Number(limit)),
+      getVideos({ venue: 'natural' }, Number(skip), Number(limit)),
+      getVideos({ venue: 'commercial' }, Number(skip), Number(limit)),
+      getVideos({ water: 'river' }, Number(skip), Number(limit)),
+      getVideos({ fishing: 'feeder' }, Number(skip), Number(limit)),
+      getVideos({ fishing: 'float' }, Number(skip), Number(limit)),
     ])
 
     return reply.code(200).send({ all, natural, commercial, river, feeder, float })
@@ -104,8 +103,8 @@ export async function getTOPVideosHandler(req: FastifyRequest<{ Querystring: Get
   try {
     const { skip, limit } = req.query
 
-    const naturalVideos = await getVideos({ venue: 'natural' }, Number(skip), Number(limit), baseVideoFields)
-    const commercialVideos = await getVideos({ venue: 'commercial' }, Number(skip), Number(limit), baseVideoFields)
+    const naturalVideos = await getVideos({ venue: 'natural' }, Number(skip), Number(limit))
+    const commercialVideos = await getVideos({ venue: 'commercial' }, Number(skip), Number(limit))
 
     return reply.code(200).send({ naturalVideos, commercialVideos })
   } catch (e) {
