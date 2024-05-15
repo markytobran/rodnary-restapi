@@ -7,7 +7,7 @@ export async function getVideos(query: FilterQuery<Video>, skip: number, limit: 
     .sort({ _id: -1 })
     .skip(skip)
     .limit(limit)
-    .select('_id title subtitles publishedAt description thumbnails videoLanguage subFishing water videoID')
+    .select('_id title subtitles publishedAt description thumbnails videoLanguage subFishing water videoID channelId')
 }
 
 export async function getVideoByID(id: string) {
