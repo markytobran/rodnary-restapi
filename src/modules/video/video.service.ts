@@ -3,7 +3,11 @@ import { Video, VideoModel } from './video.model'
 import { CreateVideoBody } from './video.schema'
 
 export async function getVideos(query: FilterQuery<Video>, skip: number, limit: number) {
-  return VideoModel.find(query).sort({ _id: -1 }).skip(skip).limit(limit)
+  return VideoModel.find(query)
+    .sort({ _id: -1 })
+    .skip(skip)
+    .limit(limit)
+    .select('_id title subtitles publishedAt description thumbnails videoLangugage subFishing water')
 }
 
 export async function getVideoByID(id: string) {
