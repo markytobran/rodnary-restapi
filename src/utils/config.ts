@@ -11,9 +11,6 @@ const schema = Type.Object({
   DATABASE_URL: Type.String(),
   API_KEY: Type.String(),
   CLIENT_URL: Type.String(),
-  CLOUDINARY_CLOUD_NAME: Type.String(),
-  CLOUDINARY_API_KEY: Type.String(),
-  CLOUDINARY_API_SECRET: Type.String(),
 })
 
 type Env = Static<typeof schema>
