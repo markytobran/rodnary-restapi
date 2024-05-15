@@ -9,6 +9,7 @@ import {
   GetChannelKeyParams,
   GetVideoBySearchQuery,
   GetSkipLimitQuery,
+  baseVideoFields,
 } from './video.schema'
 import { createVideo, getVideos, getVideoByID, deleteVideoByID, getVideosByTitleOrDescription } from './video.service'
 
@@ -82,15 +83,14 @@ export async function createVideoHandler(req: FastifyRequest<{ Body: CreateVideo
 export async function getAllVideosHomeHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
     const { skip, limit } = req.query
-    const selected = '_id title subtitles publishedAt description thumbnails videoLanguage subFishing water'
 
     const [all, natural, commercial, river, feeder, float] = await Promise.all([
-      getVideos({}, Number(skip), Number(limit), selected),
-      getVideos({ venue: 'natural' }, Number(skip), Number(limit), selected),
-      getVideos({ venue: 'commercial' }, Number(skip), Number(limit), selected),
-      getVideos({ water: 'river' }, Number(skip), Number(limit), selected),
-      getVideos({ fishing: 'feeder' }, Number(skip), Number(limit), selected),
-      getVideos({ fishing: 'float' }, Number(skip), Number(limit), selected),
+      getVideos({}, Number(skip), Number(limit), baseVideoFields),
+      getVideos({ venue: 'natural' }, Number(skip), Number(limit), baseVideoFields),
+      getVideos({ venue: 'commercial' }, Number(skip), Number(limit), baseVideoFields),
+      getVideos({ water: 'river' }, Number(skip), Number(limit), baseVideoFields),
+      getVideos({ fishing: 'feeder' }, Number(skip), Number(limit), baseVideoFields),
+      getVideos({ fishing: 'float' }, Number(skip), Number(limit), baseVideoFields),
     ])
 
     return reply.code(200).send({ all, natural, commercial, river, feeder, float })
@@ -103,10 +103,9 @@ export async function getAllVideosHomeHandler(req: FastifyRequest<{ Querystring:
 export async function getTOPVideosHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
     const { skip, limit } = req.query
-    const selected = '_id title subtitles publishedAt description thumbnails videoLanguage subFishing water'
 
-    const naturalVideos = await getVideos({ venue: 'natural' }, Number(skip), Number(limit), selected)
-    const commercialVideos = await getVideos({ venue: 'commercial' }, Number(skip), Number(limit), selected)
+    const naturalVideos = await getVideos({ venue: 'natural' }, Number(skip), Number(limit), baseVideoFields)
+    const commercialVideos = await getVideos({ venue: 'commercial' }, Number(skip), Number(limit), baseVideoFields)
 
     return reply.code(200).send({ naturalVideos, commercialVideos })
   } catch (e) {
