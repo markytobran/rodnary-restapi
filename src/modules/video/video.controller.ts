@@ -102,8 +102,10 @@ export async function getAllVideosHomeHandler(req: FastifyRequest<{ Querystring:
 export async function getTOPVideosHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
     const { skip, limit } = req.query
-    const naturalVideos = await getVideos({ venue: 'natural' }, Number(skip), Number(limit))
-    const commercialVideos = await getVideos({ venue: 'commercial' }, Number(skip), Number(limit))
+    const selected = '_id title subtitles publishedAt description thumbnails videoLanguage subFishing water'
+
+    const naturalVideos = await getVideos({ venue: 'natural' }, Number(skip), Number(limit), selected)
+    const commercialVideos = await getVideos({ venue: 'commercial' }, Number(skip), Number(limit), selected)
 
     return reply.code(200).send({ naturalVideos, commercialVideos })
   } catch (e) {
