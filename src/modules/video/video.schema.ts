@@ -23,18 +23,7 @@ const Video = Type.Object({
   coverImgLink: Type.String(),
 })
 
-const OmittedVideo = Type.Omit(Video, [
-  'channelTitle',
-  'channelId',
-  'logoURL',
-  'videoID',
-  'venue',
-  'water',
-  'fishing',
-  'likes',
-  'socialLinks',
-  'coverImgLink',
-])
+const OmittedVideo = Type.Omit(Video, ['channelTitle', 'channelId', 'logoURL', 'videoID', 'venue', 'fishing', 'likes', 'socialLinks', 'coverImgLink'])
 
 const skipLimitQuery = Type.Object({
   limit: Type.Number(),
