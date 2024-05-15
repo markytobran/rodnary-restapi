@@ -1,5 +1,7 @@
 import { Static, Type } from '@sinclair/typebox'
 
+export const baseVideoFields = '_id title subtitles publishedAt description thumbnails videoLanguage subFishing water'
+
 const Video = Type.Object({
   _id: Type.String(),
   title: Type.String(),
@@ -111,5 +113,3 @@ export type GetChannelIDParams = Static<typeof getChannelIDParamsSchema.params>
 export type GetChannelKeyParams = Static<typeof getChannelKeyParamsSchema.params>
 export type GetVideoBySearchQuery = Static<typeof getVideosBySearchQueries.query>
 export type GetSkipLimitQuery = Static<typeof skipLimitQuery>
-
-export const baseVideoFields = '_id title subtitles publishedAt description thumbnails videoLanguage subFishing water'
