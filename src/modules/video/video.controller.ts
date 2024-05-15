@@ -82,14 +82,15 @@ export async function createVideoHandler(req: FastifyRequest<{ Body: CreateVideo
 export async function getAllVideosHomeHandler(req: FastifyRequest<{ Querystring: GetSkipLimitQuery }>, reply: FastifyReply) {
   try {
     const { skip, limit } = req.query
+    const selected = '_id title subtitles publishedAt description thumbnails videoLanguage subFishing water'
 
     const [all, natural, commercial, river, feeder, float] = await Promise.all([
-      getVideos({}, Number(skip), Number(limit)),
-      getVideos({ venue: 'natural' }, Number(skip), Number(limit)),
-      getVideos({ venue: 'commercial' }, Number(skip), Number(limit)),
-      getVideos({ water: 'river' }, Number(skip), Number(limit)),
-      getVideos({ fishing: 'feeder' }, Number(skip), Number(limit)),
-      getVideos({ fishing: 'float' }, Number(skip), Number(limit)),
+      getVideos({}, Number(skip), Number(limit), selected),
+      getVideos({ venue: 'natural' }, Number(skip), Number(limit), selected),
+      getVideos({ venue: 'commercial' }, Number(skip), Number(limit), selected),
+      getVideos({ water: 'river' }, Number(skip), Number(limit), selected),
+      getVideos({ fishing: 'feeder' }, Number(skip), Number(limit), selected),
+      getVideos({ fishing: 'float' }, Number(skip), Number(limit), selected),
     ])
 
     return reply.code(200).send({ all, natural, commercial, river, feeder, float })
